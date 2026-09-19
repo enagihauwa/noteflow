@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* NoteFlow design tokens — a quiet paper/ink palette with one moss accent
+   and an amber marker reserved for pinned notes. */
+@theme {
+  --color-paper: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-ink: #1c2024;
+  --color-muted: #5d6570;
+  --color-line: #dfe3e8;
+  --color-moss: #2f6f5e;
+  --color-amber: #b3761b;
+  --color-alert: #a3312a;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Note titles and page headings carry the serif; everything else stays sans. */
+.display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-moss);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
