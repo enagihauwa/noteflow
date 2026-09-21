@@ -8,7 +8,7 @@ export default function Error({ reset }: { error: Error; reset: () => void }) {
       <p className="mt-3 text-[var(--color-muted)]">The page could not load. Try again.</p>
       <button
         onClick={reset}
-        className="mt-6 w-fit rounded-md bg-[var(--color-ink)] px-4 py-2 text-sm text-white"
+        className="mt-6 w-fit rounded-md bg-[#2563eb] px-4 py-2 text-sm text-white transition-colors hover:bg-[#1d4ed8]"
       >
         Try again
       </button>

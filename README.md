@@ -6,6 +6,29 @@ Next.js (App Router) · React · TypeScript · Tailwind CSS · Auth.js · Prisma
 
 ## Getting started
 
+### 1. Start a database
+
+The app needs a PostgreSQL database called `noteflow` reachable at the
+`DATABASE_URL` in `.env` (`postgresql://postgres:postgres@localhost:5432/noteflow`).
+
+Docker:
+
+```bash
+docker run --name noteflow-db -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:16
+```
+
+Or use a local/installed PostgreSQL (the default on this machine) and create the
+database:
+
+```bash
+psql -h localhost -U postgres -c "CREATE DATABASE noteflow;"
+```
+
+A hosted option (Neon, Supabase, Railway) works too — just point `DATABASE_URL`
+at it and keep the value in `.env`.
+
+### 2. Install, configure and run
+
 ```bash
 npm install
 cp .env.example .env        # fill DATABASE_URL and AUTH_SECRET
@@ -40,6 +63,11 @@ The real checks are server-side: every page and action calls `requireUser()`, an
 query in `lib/notes.ts` is scoped by `userId`. Writes use `updateMany` / `deleteMany`
 filtered on `{ id, userId }`, so a note id belonging to someone else matches zero rows.
 Reads on another user's note return the 404 screen, so ids cannot be probed.
+
+Sessions use the JWT strategy, so logging out only clears the cookie; the token
+itself stays valid until it expires (`maxAge` is a week, not a month, partly for
+this reason). Moving to database-backed sessions later would make logout genuinely
+revoking.
 
 ## Working the tickets
 

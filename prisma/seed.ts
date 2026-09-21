@@ -12,6 +12,7 @@ async function main() {
     create: { name: "Demo User", email: "demo@noteflow.app", password },
   });
 
+  await prisma.note.deleteMany({ where: { userId: user.id } });
   await prisma.note.createMany({
     data: [
       { userId: user.id, title: "Project requirements", content: "Auth, CRUD, search, pinning.", isPinned: true },

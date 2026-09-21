@@ -11,6 +11,7 @@
   --color-moss: #2f6f5e;
   --color-amber: #b3761b;
   --color-alert: #a3312a;
+  --color-cta: #2563eb;
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
@@ -34,7 +35,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-moss);
+  outline: 2px solid var(--color-cta);
   outline-offset: 2px;
 }
 

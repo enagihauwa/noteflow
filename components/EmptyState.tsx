@@ -19,7 +19,7 @@ export function EmptyState({ query }: { query?: string }) {
       <p className="mt-2 text-sm text-[var(--color-muted)]">Write the first one now.</p>
       <Link
         href="/notes/new"
-        className="mt-6 inline-block rounded-md bg-[var(--color-ink)] px-4 py-2 text-sm font-medium text-white"
+        className="mt-6 inline-block rounded-md bg-[#2563eb] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1d4ed8]"
       >
         Create a note
       </Link>

@@ -15,12 +15,12 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
         onClick={() => startTransition(() => void togglePinAction(noteId))}
         disabled={pending}
         aria-pressed={isPinned}
-        className="rounded-md border border-[var(--color-line)] px-3 py-1.5"
+        className="rounded-md border border-[#2563eb] px-3 py-1.5"
       >
         {isPinned ? "Unpin" : "Pin"}
       </button>
 
-      <Link href={`/notes/${noteId}/edit`} className="rounded-md border border-[var(--color-line)] px-3 py-1.5">
+      <Link href={`/notes/${noteId}/edit`} className="rounded-md border border-[#2563eb] px-3 py-1.5">
         Edit
       </Link>
 
@@ -40,7 +40,7 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
       ) : (
         <button
           onClick={() => setConfirming(true)}
-          className="rounded-md border border-[var(--color-line)] px-3 py-1.5"
+className="rounded-md border border-[#2563eb] px-3 py-1.5"
         >
           Delete
         </button>

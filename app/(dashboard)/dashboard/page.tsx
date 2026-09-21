@@ -31,7 +31,7 @@ export default async function DashboardPage({
         </div>
         <Link
           href="/notes/new"
-          className="rounded-md bg-[var(--color-ink)] px-4 py-2 text-sm font-medium text-white"
+          className="rounded-md bg-[#2563eb] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1d4ed8]"
         >
           New note
         </Link>
