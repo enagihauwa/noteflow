@@ -36,10 +36,10 @@ it happens to be correct today.
 
 ## Acceptance criteria
 
-- [ ] Every exported function takes `userId` first and uses it in the query.
-- [ ] No `prisma.note` call exists outside `lib/notes.ts`.
-- [ ] Write helpers cannot touch a row belonging to another user, even with a valid id.
-- [ ] Callers can distinguish "missing" from "not yours" by error type.
+- [x] Every exported function takes `userId` first and uses it in the query.
+- [x] No `prisma.note` call exists outside `lib/notes.ts`.
+- [x] Write helpers cannot touch a row belonging to another user, even with a valid id.
+- [x] Callers can distinguish "missing" from "not yours" by error type.
 
 ## Out of scope
 
