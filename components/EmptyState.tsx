@@ -9,6 +9,20 @@ export function EmptyState({ query }: { query?: string }) {
         <p className="mt-2 text-sm text-[var(--color-muted)]">
           Nothing matches “{query}”. Try a shorter word.
         </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm">
+          <Link
+            href="/dashboard"
+            className="rounded-md border border-[#2563eb] px-4 py-2 font-medium text-[#2563eb]"
+          >
+            Clear search
+          </Link>
+          <Link
+            href={`/notes/new?title=${encodeURIComponent(query)}`}
+            className="rounded-md bg-[#2563eb] px-4 py-2 font-medium text-white transition-colors hover:bg-[#1d4ed8]"
+          >
+            Create a note named “{query}”
+          </Link>
+        </div>
       </div>
     );
   }

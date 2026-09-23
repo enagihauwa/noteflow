@@ -37,11 +37,11 @@ AUTHZ-004 checks for.
 
 ## Acceptance criteria
 
-- [ ] Title matches are returned.
-- [ ] Content matches are returned.
-- [ ] Matching is case-insensitive.
-- [ ] Results stay scoped to the signed-in user.
-- [ ] Pinned ordering is preserved inside results.
+- [x] Title matches are returned.
+- [x] Content matches are returned.
+- [x] Matching is case-insensitive.
+- [x] Results stay scoped to the signed-in user.
+- [x] Pinned ordering is preserved inside results.
 
 ## Out of scope
 

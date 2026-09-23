@@ -33,11 +33,11 @@ button and a shared link all keep working, and the server can do the filtering.
 
 ## Acceptance criteria
 
-- [ ] Results narrow as the user types.
-- [ ] The query survives a page refresh.
-- [ ] Clearing the field restores the full list and removes `q` from the URL.
-- [ ] Typing does not flood the history stack.
-- [ ] The input is labelled for screen readers.
+- [x] Results narrow as the user types.
+- [x] The query survives a page refresh.
+- [x] Clearing the field restores the full list and removes `q` from the URL.
+- [x] Typing does not flood the history stack.
+- [x] The input is labelled for screen readers.
 
 ## Out of scope
 
