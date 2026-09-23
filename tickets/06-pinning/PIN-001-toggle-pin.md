@@ -32,11 +32,11 @@ stale page cannot flip the wrong way.
 
 ## Acceptance criteria
 
-- [ ] The button label always describes the next action.
-- [ ] Pin state persists across a refresh.
-- [ ] `aria-pressed` reflects the current state.
-- [ ] Toggling another user's note id changes nothing.
-- [ ] Rapid double-toggling ends in a consistent state.
+- [x] The button label always describes the next action.
+- [x] Pin state persists across a refresh.
+- [x] `aria-pressed` reflects the current state.
+- [x] Toggling another user's note id changes nothing.
+- [x] Rapid double-toggling ends in a consistent state.
 
 ## Out of scope
 

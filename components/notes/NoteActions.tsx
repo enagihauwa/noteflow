@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { deleteNoteAction, togglePinAction } from "@/lib/actions/note-actions";
+import { deleteNoteAction } from "@/lib/actions/note-actions";
+import { PinToggle } from "@/components/notes/PinToggle";
 
 // NOTE-005 + PIN-001
 export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: boolean }) {
@@ -40,14 +41,7 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
 
   return (
     <div ref={wrapRef} className="flex items-center gap-2 text-sm">
-      <button
-        onClick={() => startTransition(() => void togglePinAction(noteId))}
-        disabled={pending}
-        aria-pressed={isPinned}
-        className="rounded-md border border-[#2563eb] px-3 py-1.5"
-      >
-        {isPinned ? "Unpin" : "Pin"}
-      </button>
+      <PinToggle noteId={noteId} isPinned={isPinned} className="px-3 py-1.5 text-sm" />
 
       <Link href={`/notes/${noteId}/edit`} className="rounded-md border border-[#2563eb] px-3 py-1.5">
         Edit
