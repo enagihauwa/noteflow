@@ -37,9 +37,11 @@ export function LoginForm({ from = "/dashboard" }: { from?: string }) {
           type="email"
           autoComplete="email"
           required
+          aria-invalid={Boolean(state.fieldErrors?.email)}
+          aria-describedby={state.fieldErrors?.email ? "login-email-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.email))}
         />
-        <FieldError messages={state.fieldErrors?.email} />
+        <FieldError id="login-email-error" messages={state.fieldErrors?.email} />
       </div>
 
       <div>
@@ -52,9 +54,11 @@ export function LoginForm({ from = "/dashboard" }: { from?: string }) {
           type="password"
           autoComplete="current-password"
           required
+          aria-invalid={Boolean(state.fieldErrors?.password)}
+          aria-describedby={state.fieldErrors?.password ? "login-password-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.password))}
         />
-        <FieldError messages={state.fieldErrors?.password} />
+        <FieldError id="login-password-error" messages={state.fieldErrors?.password} />
       </div>
 
       {state.message && (

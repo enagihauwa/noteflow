@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { signIn, signOut } from "@/lib/auth";
 import { requireUser } from "@/lib/session";
 import { signUpSchema, signInSchema } from "@/lib/validations";
-import { type ActionState } from "@/lib/errors";
+import { type ActionState, DUPLICATE_EMAIL, INVALID_CREDENTIALS } from "@/lib/errors";
 
 export async function registerAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const parsed = signUpSchema.safeParse(Object.fromEntries(formData));
@@ -19,7 +19,7 @@ export async function registerAction(_prev: ActionState, formData: FormData): Pr
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    return { ok: false, fieldErrors: { email: ["An account already exists with this email."] } };
+    return { ok: false, fieldErrors: { email: [DUPLICATE_EMAIL] } };
   }
 
   const hashed = await bcrypt.hash(password, 12);
@@ -30,7 +30,7 @@ export async function registerAction(_prev: ActionState, formData: FormData): Pr
     // P2002 fires when two requests register the same email at once; treat it
     // like the pre-check so the user sees the same friendly message.
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
-      return { ok: false, fieldErrors: { email: ["An account already exists with this email."] } };
+      return { ok: false, fieldErrors: { email: [DUPLICATE_EMAIL] } };
     }
     throw error;
   }
@@ -61,7 +61,7 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
     return { ok: true };
   } catch (error) {
     if (error instanceof AuthError) {
-      return { ok: false, message: "Invalid email or password." };
+      return { ok: false, message: INVALID_CREDENTIALS };
     }
     throw error; // redirects and unknown failures bubble up
   }

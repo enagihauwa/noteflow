@@ -106,9 +106,11 @@ export function SignUpForm() {
           id="name"
           name="name"
           required
+          aria-invalid={Boolean(state.fieldErrors?.name)}
+          aria-describedby={state.fieldErrors?.name ? "signup-name-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.name))}
         />
-        <FieldError messages={state.fieldErrors?.name} />
+        <FieldError id="signup-name-error" messages={state.fieldErrors?.name} />
       </div>
 
       <div>
@@ -121,9 +123,11 @@ export function SignUpForm() {
           type="email"
           autoComplete="email"
           required
+          aria-invalid={Boolean(state.fieldErrors?.email)}
+          aria-describedby={state.fieldErrors?.email ? "signup-email-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.email))}
         />
-        <FieldError messages={state.fieldErrors?.email} />
+        <FieldError id="signup-email-error" messages={state.fieldErrors?.email} />
       </div>
 
       <div>
@@ -139,6 +143,8 @@ export function SignUpForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            aria-invalid={Boolean(state.fieldErrors?.password)}
+            aria-describedby={state.fieldErrors?.password ? "signup-password-error" : undefined}
             className={fieldClass(Boolean(state.fieldErrors?.password), "pr-12")}
           />
           <PasswordToggle
@@ -162,7 +168,7 @@ export function SignUpForm() {
             );
           })}
         </ul>
-        <FieldError messages={state.fieldErrors?.password} />
+        <FieldError id="signup-password-error" messages={state.fieldErrors?.password} />
       </div>
 
       <div>
@@ -178,6 +184,8 @@ export function SignUpForm() {
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            aria-invalid={Boolean(state.fieldErrors?.confirmPassword)}
+            aria-describedby={state.fieldErrors?.confirmPassword ? "signup-confirm-error" : undefined}
             className={fieldClass(Boolean(state.fieldErrors?.confirmPassword), "pr-12")}
           />
           <PasswordToggle
@@ -186,7 +194,7 @@ export function SignUpForm() {
             label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
           />
         </div>
-        <FieldError messages={state.fieldErrors?.confirmPassword} />
+        <FieldError id="signup-confirm-error" messages={state.fieldErrors?.confirmPassword} />
       </div>
 
       {state.message && (

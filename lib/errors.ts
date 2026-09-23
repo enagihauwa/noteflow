@@ -15,6 +15,10 @@ export class NotFoundError extends Error {
 
 export const GENERIC_ERROR = "Something went wrong. Please try again.";
 
+// Fixed copy for the auth flows — see tickets/02-authentication/AUTH-007-auth-error-messages.md.
+export const INVALID_CREDENTIALS = "Invalid email or password.";
+export const DUPLICATE_EMAIL = "An account already exists with this email.";
+
 export type ActionState = {
   ok: boolean;
   message?: string;
