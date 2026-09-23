@@ -34,11 +34,11 @@ everything else, or successful logins will look like failures.
 
 ## Acceptance criteria
 
-- [ ] Correct credentials land on `/dashboard`, or on the page the user first requested.
-- [ ] Wrong password and unknown email produce the identical message.
-- [ ] A successful login is not reported as an error by the redirect throw.
-- [ ] `from` cannot send the user to an external domain.
-- [ ] The password field is never echoed back into the HTML.
+- [x] Correct credentials land on `/dashboard`, or on the page the user first requested.
+- [x] Wrong password and unknown email produce the identical message.
+- [x] A successful login is not reported as an error by the redirect throw.
+- [x] `from` cannot send the user to an external domain.
+- [x] The password field is never echoed back into the HTML.
 
 ## Out of scope
 

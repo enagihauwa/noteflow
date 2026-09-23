@@ -38,10 +38,10 @@ is revisited by AUTH-006, since a JWT cannot be revoked server-side before it ex
 
 ## Acceptance criteria
 
-- [ ] `auth()` in a Server Component returns a session with `user.id` after login.
-- [ ] `authorize` returns `null` for a wrong password rather than throwing.
-- [ ] `session.user.id` type-checks without a cast.
-- [ ] The app refuses to boot without `AUTH_SECRET`.
+- [x] `auth()` in a Server Component returns a session with `user.id` after login.
+- [x] `authorize` returns `null` for a wrong password rather than throwing.
+- [x] `session.user.id` type-checks without a cast.
+- [x] The app refuses to boot without `AUTH_SECRET`.
 
 ## Out of scope
 
