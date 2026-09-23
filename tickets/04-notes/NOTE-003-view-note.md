@@ -32,10 +32,10 @@ a stored XSS hole for the price of one convenience.
 
 ## Acceptance criteria
 
-- [ ] Line breaks in the content are preserved.
-- [ ] Text that looks like HTML is displayed, not executed.
-- [ ] A long URL wraps instead of widening the page.
-- [ ] Edit, pin and delete are all reachable from this page.
+- [x] Line breaks in the content are preserved.
+- [x] Text that looks like HTML is displayed, not executed.
+- [x] A long URL wraps instead of widening the page.
+- [x] Edit, pin and delete are all reachable from this page.
 
 ## Out of scope
 

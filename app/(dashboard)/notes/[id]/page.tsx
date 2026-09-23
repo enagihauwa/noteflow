@@ -6,16 +6,23 @@ import { NotAuthorizedError, NotFoundError } from "@/lib/errors";
 import { NoteActions } from "@/components/notes/NoteActions";
 
 // NOTE-003 + AUTHZ-002
-export default async function NotePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function NotePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ q?: string }>;
+}) {
   const user = await requireUser();
   const { id } = await params;
+  const { q } = await searchParams;
+  const search = q?.trim() || undefined;
 
   let note;
   try {
     note = await getNote(user.id, id);
   } catch (error) {
-    if (error instanceof NotFoundError) notFound();
-    if (error instanceof NotAuthorizedError) {
+    if (error instanceof NotFoundError || error instanceof NotAuthorizedError) {
       // Same response as "missing" so ids cannot be probed.
       notFound();
     }
@@ -24,7 +31,10 @@ export default async function NotePage({ params }: { params: Promise<{ id: strin
 
   return (
     <article className="mx-auto max-w-2xl">
-      <Link href="/dashboard" className="text-sm text-[var(--color-muted)]">
+      <Link
+        href={search ? `/dashboard?q=${encodeURIComponent(search)}` : "/dashboard"}
+        className="text-sm text-[var(--color-muted)]"
+      >
         ← All notes
       </Link>
       <header className="mt-4 flex flex-wrap items-start justify-between gap-4">
@@ -34,7 +44,9 @@ export default async function NotePage({ params }: { params: Promise<{ id: strin
       <p className="mt-2 text-xs text-[var(--color-muted)]">
         Updated {note.updatedAt.toLocaleString()}
       </p>
-      <div className="mt-6 whitespace-pre-wrap text-[17px] leading-relaxed">{note.content}</div>
+      <div className="mt-6 whitespace-pre-wrap [overflow-wrap:anywhere] text-[17px] leading-relaxed">
+        {note.content}
+      </div>
     </article>
   );
 }

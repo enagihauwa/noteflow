@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { Note } from "@prisma/client";
 
-export function NoteCard({ note }: { note: Note }) {
+export function NoteCard({ note, query }: { note: Note; query?: string }) {
+  const href = query ? `/notes/${note.id}?q=${encodeURIComponent(query)}` : `/notes/${note.id}`;
   return (
     <Link
-      href={`/notes/${note.id}`}
+      href={href}
       className="block rounded-lg border border-[var(--color-line)] bg-[var(--color-surface)] p-5"
     >
       <div className="flex items-start justify-between gap-3">

@@ -1,16 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { deleteNoteAction, togglePinAction } from "@/lib/actions/note-actions";
 
-// PIN-001 + NOTE-005
+// NOTE-005 + PIN-001
 export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: boolean }) {
   const [confirming, setConfirming] = useState(false);
   const [pending, startTransition] = useTransition();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!confirming) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setConfirming(false);
+        triggerRef.current?.focus();
+      }
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (wrapRef.current && e.target instanceof Node && !wrapRef.current.contains(e.target)) {
+        setConfirming(false);
+        triggerRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [confirming]);
+
+  const cancel = () => {
+    setConfirming(false);
+    triggerRef.current?.focus();
+  };
 
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div ref={wrapRef} className="flex items-center gap-2 text-sm">
       <button
         onClick={() => startTransition(() => void togglePinAction(noteId))}
         disabled={pending}
@@ -25,22 +54,24 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
       </Link>
 
       {confirming ? (
-        <span className="flex items-center gap-2">
+        <span role="alert" className="flex items-center gap-2">
           <button
+            autoFocus
             onClick={() => startTransition(() => void deleteNoteAction(noteId))}
             disabled={pending}
             className="rounded-md bg-[var(--color-alert)] px-3 py-1.5 text-white"
           >
             Delete for good
           </button>
-          <button onClick={() => setConfirming(false)} className="text-[var(--color-muted)]">
+          <button onClick={cancel} className="text-[var(--color-muted)]">
             Keep
           </button>
         </span>
       ) : (
         <button
+          ref={triggerRef}
           onClick={() => setConfirming(true)}
-className="rounded-md border border-[#2563eb] px-3 py-1.5"
+          className="rounded-md border border-[#2563eb] px-3 py-1.5"
         >
           Delete
         </button>
