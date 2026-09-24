@@ -26,6 +26,8 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  overflow-wrap: anywhere;
 }
 
 /* Note titles and page headings carry the serif; everything else stays sans. */

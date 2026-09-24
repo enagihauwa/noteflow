@@ -10,7 +10,10 @@ export default function SignUpPage() {
       <SignUpForm />
       <p className="mt-6 text-center text-sm text-[var(--color-muted)]">
         Already registered?{" "}
-        <Link href="/login" className="font-semibold text-[#2563eb] hover:underline">
+        <Link
+          href="/login"
+          className="inline-flex min-h-11 items-center font-semibold text-[#2563eb] hover:underline"
+        >
           Log in
         </Link>
       </p>

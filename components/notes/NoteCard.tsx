@@ -10,7 +10,7 @@ export function NoteCard({ note, query }: { note: Note; query?: string }) {
   return (
     <div className="relative rounded-lg border border-[var(--color-line)] bg-[var(--color-surface)] p-5">
       <Link href={href} className="block">
-        <h3 className="display flex items-center gap-2 text-lg leading-snug">
+        <h3 className="display flex items-center gap-2 text-lg leading-snug [overflow-wrap:anywhere]">
           {note.isPinned && (
             <span
               aria-label="Pinned"
@@ -19,7 +19,9 @@ export function NoteCard({ note, query }: { note: Note; query?: string }) {
           )}
           {note.title}
         </h3>
-        <p className="mt-2 line-clamp-3 text-sm text-[var(--color-muted)]">{note.content}</p>
+        <p className="mt-2 line-clamp-3 text-sm text-[var(--color-muted)] [overflow-wrap:anywhere]">
+          {note.content}
+        </p>
         <p className="mt-4 text-xs text-[var(--color-muted)]">
           {note.updatedAt.toLocaleDateString()}
         </p>

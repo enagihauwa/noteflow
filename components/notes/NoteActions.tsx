@@ -40,24 +40,30 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
   };
 
   return (
-    <div ref={wrapRef} className="flex items-center gap-2 text-sm">
+    <div ref={wrapRef} className="flex flex-wrap items-center gap-2 text-sm">
       <PinToggle noteId={noteId} isPinned={isPinned} className="px-3 py-1.5 text-sm" />
 
-      <Link href={`/notes/${noteId}/edit`} className="rounded-md border border-[#2563eb] px-3 py-1.5">
+      <Link
+        href={`/notes/${noteId}/edit`}
+        className="inline-flex min-h-11 items-center rounded-md border border-[#2563eb] px-3 py-1.5"
+      >
         Edit
       </Link>
 
       {confirming ? (
-        <span role="alert" className="flex items-center gap-2">
+        <span role="alert" className="flex flex-wrap items-center gap-2">
           <button
             autoFocus
             onClick={() => startTransition(() => void deleteNoteAction(noteId))}
             disabled={pending}
-            className="rounded-md bg-[var(--color-alert)] px-3 py-1.5 text-white"
+            className="inline-flex min-h-11 items-center rounded-md bg-[var(--color-alert)] px-3 py-1.5 text-white"
           >
             Delete for good
           </button>
-          <button onClick={cancel} className="text-[var(--color-muted)]">
+          <button
+            onClick={cancel}
+            className="inline-flex min-h-11 items-center text-[var(--color-muted)]"
+          >
             Keep
           </button>
         </span>
@@ -65,7 +71,7 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
         <button
           ref={triggerRef}
           onClick={() => setConfirming(true)}
-          className="rounded-md border border-[#2563eb] px-3 py-1.5"
+          className="inline-flex min-h-11 items-center rounded-md border border-[#2563eb] px-3 py-1.5"
         >
           Delete
         </button>

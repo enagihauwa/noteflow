@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { registerAction } from "@/lib/actions/auth-actions";
+import { signUpSchema, textFieldProps } from "@/lib/validations";
 import { FieldError } from "@/components/FieldError";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import type { ActionState } from "@/lib/errors";
@@ -91,6 +92,8 @@ const REQUIREMENTS = [
 
 export function SignUpForm() {
   const [state, action] = useActionState(registerAction, initial);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -105,7 +108,9 @@ export function SignUpForm() {
         <input
           id="name"
           name="name"
-          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          {...textFieldProps(signUpSchema, "name")}
           aria-invalid={Boolean(state.fieldErrors?.name)}
           aria-describedby={state.fieldErrors?.name ? "signup-name-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.name))}
@@ -122,7 +127,9 @@ export function SignUpForm() {
           name="email"
           type="email"
           autoComplete="email"
-          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          {...textFieldProps(signUpSchema, "email")}
           aria-invalid={Boolean(state.fieldErrors?.email)}
           aria-describedby={state.fieldErrors?.email ? "signup-email-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.email))}
@@ -140,9 +147,9 @@ export function SignUpForm() {
             name="password"
             type={showPassword ? "text" : "password"}
             autoComplete="new-password"
-            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            {...textFieldProps(signUpSchema, "password")}
             aria-invalid={Boolean(state.fieldErrors?.password)}
             aria-describedby={state.fieldErrors?.password ? "signup-password-error" : undefined}
             className={fieldClass(Boolean(state.fieldErrors?.password), "pr-12")}
@@ -158,7 +165,10 @@ export function SignUpForm() {
             const met = password.length > 0 && requirement.test(password);
             return (
               <li key={requirement.label} className="flex items-center gap-1.5 text-xs">
-                <span className={met ? "font-medium text-[#2563eb]" : "text-[var(--color-muted)]"}>
+                <span
+                  aria-hidden="true"
+                  className={met ? "font-medium text-[#2563eb]" : "text-[var(--color-muted)]"}
+                >
                   {met ? "✓" : "○"}
                 </span>
                 <span className={met ? "text-[var(--color-ink)]" : "text-[var(--color-muted)]"}>
@@ -181,9 +191,9 @@ export function SignUpForm() {
             name="confirmPassword"
             type={showConfirmPassword ? "text" : "password"}
             autoComplete="new-password"
-            required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            {...textFieldProps(signUpSchema, "confirmPassword")}
             aria-invalid={Boolean(state.fieldErrors?.confirmPassword)}
             aria-describedby={state.fieldErrors?.confirmPassword ? "signup-confirm-error" : undefined}
             className={fieldClass(Boolean(state.fieldErrors?.confirmPassword), "pr-12")}

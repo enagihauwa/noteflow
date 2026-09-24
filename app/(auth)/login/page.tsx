@@ -16,7 +16,10 @@ export default async function LoginPage({
       <LoginForm from={from} />
       <p className="mt-6 text-sm text-[var(--color-muted)]">
         No account yet?{" "}
-        <Link href="/signup" className="font-medium text-[#2563eb] hover:underline">
+        <Link
+          href="/signup"
+          className="inline-flex min-h-11 items-center font-medium text-[#2563eb] hover:underline"
+        >
           Create one
         </Link>
       </p>

@@ -35,7 +35,7 @@ provider offers, and keep the direct string for migrations.
 - [ ] The production database has both tables and the unique email constraint.
 - [ ] Production secrets differ from development ones.
 - [ ] Migrations are applied with `migrate deploy`.
-- [ ] No production credential is committed.
+- [x] No production credential is committed.
 
 ## Out of scope
 

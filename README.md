@@ -40,6 +40,50 @@ npm run dev
 
 Demo account after seeding: `demo@noteflow.app` / `Password123!`
 
+## Deploying to production — DEP-001
+
+1. Create a hosted PostgreSQL database (Neon, Supabase or Railway) in the region
+   closest to your users. Copy the **pooled** connection string for `DATABASE_URL`
+   and, if the provider offers one, the **direct** string for `DIRECT_URL`.
+2. Generate a fresh secret for production — never reuse the development one:
+
+   ```bash
+   npx auth secret
+   ```
+
+3. In the Vercel project's production environment set:
+   `DATABASE_URL` (pooled), `DIRECT_URL` (direct), `AUTH_SECRET` (the fresh
+   secret), `AUTH_URL` (the public production URL). Do not commit any of them.
+
+4. Apply the schema to production — always `migrate deploy`, never `migrate dev`:
+
+   ```bash
+   DIRECT_URL="$PROD_DIRECT_URL" npx prisma migrate deploy
+   ```
+
+5. Confirm both tables exist and that `User.email` has a unique index:
+
+   ```sql
+   SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
+   SELECT conname FROM pg_constraint WHERE conname = 'User_email_key';
+   ```
+
+## Deploying to Vercel — DEP-002
+
+Import this repository into Vercel with the GitHub integration and select the
+production branch (`main`). The `build` script in `package.json` already runs
+`prisma generate && next build`, so no custom build command is needed.
+
+- Set the DEP-001 environment variables for **Production** and **Preview**:
+  `DATABASE_URL` (pooled), `DIRECT_URL`, `AUTH_SECRET` (fresh per environment),
+  `AUTH_URL`.
+- For Production, `AUTH_URL` is the live URL (e.g. `https://noteflow.app`). For
+  Preview, set it to the per-preview URL Vercel generates.
+- Push to the production branch and read the build log for warnings, not just the
+  success line. Open a pull request to confirm preview deployments build with
+  their own environment.
+- Verify the live URL serves the landing page over HTTPS before calling it done.
+
 ## How the code is laid out
 
 | Path | What lives there |

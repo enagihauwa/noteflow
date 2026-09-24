@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { loginAction } from "@/lib/actions/auth-actions";
+import { signInSchema, textFieldProps } from "@/lib/validations";
 import { FieldError } from "@/components/FieldError";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import type { ActionState } from "@/lib/errors";
@@ -23,6 +24,8 @@ function fieldClass(hasError: boolean) {
 
 export function LoginForm({ from = "/dashboard" }: { from?: string }) {
   const [state, action] = useActionState(loginAction, initial);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <form action={action} className="mt-6 space-y-5">
@@ -36,7 +39,9 @@ export function LoginForm({ from = "/dashboard" }: { from?: string }) {
           name="email"
           type="email"
           autoComplete="email"
-          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          {...textFieldProps(signInSchema, "email")}
           aria-invalid={Boolean(state.fieldErrors?.email)}
           aria-describedby={state.fieldErrors?.email ? "login-email-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.email))}
@@ -53,7 +58,9 @@ export function LoginForm({ from = "/dashboard" }: { from?: string }) {
           name="password"
           type="password"
           autoComplete="current-password"
-          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          {...textFieldProps(signInSchema, "password")}
           aria-invalid={Boolean(state.fieldErrors?.password)}
           aria-describedby={state.fieldErrors?.password ? "login-password-error" : undefined}
           className={fieldClass(Boolean(state.fieldErrors?.password))}

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/session";
 import { getNote } from "@/lib/notes";
 import { NotAuthorizedError, NotFoundError } from "@/lib/errors";
+import { serverLogError } from "@/lib/log";
 import { NoteActions } from "@/components/notes/NoteActions";
 
 // NOTE-003 + AUTHZ-002
@@ -26,6 +27,7 @@ export default async function NotePage({
       // Same response as "missing" so ids cannot be probed.
       notFound();
     }
+    serverLogError(`note.getNote user=${user.id} note=${id}`, error);
     throw error;
   }
 
@@ -33,12 +35,12 @@ export default async function NotePage({
     <article className="mx-auto max-w-2xl">
       <Link
         href={search ? `/dashboard?q=${encodeURIComponent(search)}` : "/dashboard"}
-        className="text-sm text-[var(--color-muted)]"
+        className="inline-flex min-h-11 items-center text-sm text-[var(--color-muted)]"
       >
         ← All notes
       </Link>
-      <header className="mt-4 flex flex-wrap items-start justify-between gap-4">
-        <h1 className="display text-3xl">{note.title}</h1>
+      <header className="mt-2 flex flex-wrap items-start justify-between gap-4">
+        <h1 className="display text-3xl [overflow-wrap:anywhere]">{note.title}</h1>
         <NoteActions noteId={note.id} isPinned={note.isPinned} />
       </header>
       <p className="mt-2 text-xs text-[var(--color-muted)]">

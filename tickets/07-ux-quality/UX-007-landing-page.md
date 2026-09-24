@@ -32,10 +32,10 @@ there is nothing to price.
 
 ## Acceptance criteria
 
-- [ ] The page states what the product does without scrolling.
-- [ ] Both actions lead to the right screens.
-- [ ] A signed-in visitor is redirected to the dashboard.
-- [ ] The page renders with no client-side JavaScript.
+- [x] The page states what the product does without scrolling.
+- [x] Both actions lead to the right screens.
+- [x] A signed-in visitor is redirected to the dashboard.
+- [x] The page renders with no client-side JavaScript.
 
 ## Out of scope
 

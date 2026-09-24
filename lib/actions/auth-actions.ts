@@ -8,6 +8,7 @@ import { signIn, signOut } from "@/lib/auth";
 import { requireUser } from "@/lib/session";
 import { signUpSchema, signInSchema } from "@/lib/validations";
 import { type ActionState, DUPLICATE_EMAIL, INVALID_CREDENTIALS } from "@/lib/errors";
+import { isNextRedirect, serverLogError } from "@/lib/log";
 
 export async function registerAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const parsed = signUpSchema.safeParse(Object.fromEntries(formData));
@@ -32,6 +33,7 @@ export async function registerAction(_prev: ActionState, formData: FormData): Pr
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       return { ok: false, fieldErrors: { email: [DUPLICATE_EMAIL] } };
     }
+    serverLogError("auth.register", error);
     throw error;
   }
 
@@ -63,7 +65,9 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
     if (error instanceof AuthError) {
       return { ok: false, message: INVALID_CREDENTIALS };
     }
-    throw error; // redirects and unknown failures bubble up
+    if (isNextRedirect(error)) throw error; // the success path control flow
+    serverLogError("auth.login", error);
+    throw error; // unknown failures bubble up to the boundary
   }
 }
 
