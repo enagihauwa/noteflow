@@ -5,14 +5,16 @@ import { NotAuthorizedError, NotFoundError } from "@/lib/errors";
 // not in the UI — see tickets/03-authorization.
 
 export async function listNotes(userId: string, query?: string) {
+  // Trim here too, so a stray space never filters everything out regardless of caller.
+  const q = query?.trim();
   return prisma.note.findMany({
     where: {
       userId,
-      ...(query
+      ...(q
         ? {
             OR: [
-              { title: { contains: query, mode: "insensitive" } },
-              { content: { contains: query, mode: "insensitive" } },
+              { title: { contains: q, mode: "insensitive" } },
+              { content: { contains: q, mode: "insensitive" } },
             ],
           }
         : {}),

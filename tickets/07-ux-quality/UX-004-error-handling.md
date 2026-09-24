@@ -33,11 +33,11 @@ in the browser is both confusing and an information leak.
 
 ## Acceptance criteria
 
-- [ ] A thrown error renders the boundary, not a white screen.
-- [ ] Reset recovers without a full page reload.
-- [ ] No stack trace, SQL or internal id reaches the browser.
-- [ ] Known errors keep their specific message.
-- [ ] A database outage produces a readable page.
+- [x] A thrown error renders the boundary, not a white screen.
+- [x] Reset recovers without a full page reload.
+- [x] No stack trace, SQL or internal id reaches the browser.
+- [x] Known errors keep their specific message.
+- [x] A database outage produces a readable page.
 
 ## Out of scope
 

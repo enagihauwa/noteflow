@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { createNoteAction, updateNoteAction } from "@/lib/actions/note-actions";
+import { noteSchema, textFieldProps } from "@/lib/validations";
 import { FieldError } from "@/components/FieldError";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import type { ActionState } from "@/lib/errors";
 
 const initial: ActionState = { ok: false };
-const MAX_TITLE = 120;
+const titleProps = textFieldProps(noteSchema, "title");
+const contentProps = textFieldProps(noteSchema, "content");
 
 type Props = {
   mode: "create" | "edit";
@@ -22,6 +24,7 @@ export function NoteForm({ mode, noteId, defaultTitle = "", defaultContent = "" 
     mode === "edit" && noteId ? updateNoteAction.bind(null, noteId) : createNoteAction;
   const [state, formAction] = useActionState(action, initial);
   const [title, setTitle] = useState(defaultTitle);
+  const [content, setContent] = useState(defaultContent);
 
   return (
     <form action={formAction} className="mt-6 max-w-2xl space-y-5">
@@ -31,18 +34,20 @@ export function NoteForm({ mode, noteId, defaultTitle = "", defaultContent = "" 
             Title
           </label>
           <span className="text-xs text-[var(--color-muted)]">
-            {title.length}/{MAX_TITLE}
+            {title.length}/{titleProps.maxLength}
           </span>
         </div>
         <input
           id="title"
           name="title"
           value={title}
-          maxLength={MAX_TITLE}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-1 w-full rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2"
+          {...titleProps}
+          aria-invalid={Boolean(state.fieldErrors?.title)}
+          aria-describedby={state.fieldErrors?.title ? "note-title-error" : undefined}
+          className="mt-1 w-full min-h-11 rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2"
         />
-        <FieldError messages={state.fieldErrors?.title} />
+        <FieldError id="note-title-error" messages={state.fieldErrors?.title} />
       </div>
 
       <div>
@@ -53,10 +58,14 @@ export function NoteForm({ mode, noteId, defaultTitle = "", defaultContent = "" 
           id="content"
           name="content"
           rows={14}
-          defaultValue={defaultContent}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          {...contentProps}
+          aria-invalid={Boolean(state.fieldErrors?.content)}
+          aria-describedby={state.fieldErrors?.content ? "note-content-error" : undefined}
           className="mt-1 w-full rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2 leading-relaxed"
         />
-        <FieldError messages={state.fieldErrors?.content} />
+        <FieldError id="note-content-error" messages={state.fieldErrors?.content} />
       </div>
 
       {state.message && (
@@ -69,7 +78,7 @@ export function NoteForm({ mode, noteId, defaultTitle = "", defaultContent = "" 
         <SubmitButton pendingLabel="Saving…">Save note</SubmitButton>
         <Link
           href={mode === "edit" && noteId ? `/notes/${noteId}` : "/dashboard"}
-          className="text-sm text-[var(--color-muted)]"
+          className="inline-flex min-h-11 items-center text-sm text-[var(--color-muted)]"
         >
           Cancel
         </Link>

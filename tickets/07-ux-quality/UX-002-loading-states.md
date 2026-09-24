@@ -31,10 +31,10 @@ for, so the page does not jump when real data lands.
 
 ## Acceptance criteria
 
-- [ ] Every submit button disables and relabels while pending.
-- [ ] The dashboard shows skeletons, not a blank screen, on a slow load.
-- [ ] Skeletons do not cause a layout shift when content arrives.
-- [ ] Double submission cannot create two notes.
+- [x] Every submit button disables and relabels while pending.
+- [x] The dashboard shows skeletons, not a blank screen, on a slow load.
+- [x] Skeletons do not cause a layout shift when content arrives.
+- [x] Double submission cannot create two notes.
 
 ## Out of scope
 

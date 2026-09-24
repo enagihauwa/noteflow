@@ -33,11 +33,11 @@ the security.
 
 ## Acceptance criteria
 
-- [ ] Update with a foreign id modifies no rows and returns the authorization message.
-- [ ] Delete with a foreign id removes nothing.
-- [ ] Pin toggle with a foreign id changes nothing.
-- [ ] No action trusts a user id supplied by the client.
-- [ ] A forged request produces no partial write.
+- [x] Update with a foreign id modifies no rows and returns the authorization message.
+- [x] Delete with a foreign id removes nothing.
+- [x] Pin toggle with a foreign id changes nothing.
+- [x] No action trusts a user id supplied by the client.
+- [x] A forged request produces no partial write.
 
 ## Out of scope
 

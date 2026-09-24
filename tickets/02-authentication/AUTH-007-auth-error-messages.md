@@ -32,10 +32,10 @@ sit above the submit button.
 
 ## Acceptance criteria
 
-- [ ] Every message in §12 appears in the product with matching wording.
-- [ ] Errors are announced to screen readers.
-- [ ] No stack trace or database error reaches the browser.
-- [ ] Error styling is consistent across both forms.
+- [x] Every message in §12 appears in the product with matching wording.
+- [x] Errors are announced to screen readers.
+- [x] No stack trace or database error reaches the browser.
+- [x] Error styling is consistent across both forms.
 
 ## Out of scope
 

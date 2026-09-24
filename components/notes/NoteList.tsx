@@ -1,7 +1,15 @@
 import type { Note } from "@prisma/client";
 import { NoteCard } from "@/components/notes/NoteCard";
 
-export function NoteList({ heading, notes }: { heading?: string; notes: Note[] }) {
+export function NoteList({
+  heading,
+  notes,
+  query,
+}: {
+  heading?: string;
+  notes: Note[];
+  query?: string;
+}) {
   return (
     <section>
       {heading && (
@@ -9,7 +17,7 @@ export function NoteList({ heading, notes }: { heading?: string; notes: Note[] }
       )}
       <div className="grid gap-4 sm:grid-cols-2">
         {notes.map((note) => (
-          <NoteCard key={note.id} note={note} />
+          <NoteCard key={note.id} note={note} query={query} />
         ))}
       </div>
     </section>
