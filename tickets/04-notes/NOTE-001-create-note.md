@@ -34,12 +34,12 @@ apart.
 
 ## Acceptance criteria
 
-- [ ] A saved note belongs to the signed-in user and appears on the dashboard.
-- [ ] An empty title shows "Please enter a note title."
-- [ ] An empty content shows "Please enter some content."
-- [ ] A whitespace-only value counts as empty.
-- [ ] Cancel returns to the dashboard without saving.
-- [ ] Double-clicking Save does not create two notes.
+- [x] A saved note belongs to the signed-in user and appears on the dashboard.
+- [x] An empty title shows "Please enter a note title."
+- [x] An empty content shows "Please enter some content."
+- [x] A whitespace-only value counts as empty.
+- [x] Cancel returns to the dashboard without saving.
+- [x] Double-clicking Save does not create two notes.
 
 ## Out of scope
 

@@ -32,7 +32,7 @@ postinstall hook.
 ## Acceptance criteria
 
 - [ ] `main` deploys automatically on push.
-- [ ] The build runs `prisma generate`.
+- [x] The build runs `prisma generate`.
 - [ ] The live URL serves the landing page over HTTPS.
 - [ ] Preview deployments build successfully.
 - [ ] No secret appears in the build log.

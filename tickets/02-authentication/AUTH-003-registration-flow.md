@@ -34,11 +34,11 @@ user-facing message rather than a crash.
 
 ## Acceptance criteria
 
-- [ ] A valid signup creates a user and lands on `/dashboard` already authenticated.
-- [ ] A duplicate email shows the message on the email field and creates nothing.
-- [ ] Mismatched passwords show the error on the confirm field.
-- [ ] Errors do not clear the name and email the user already typed.
-- [ ] The submit button disables while the request is in flight.
+- [x] A valid signup creates a user and lands on `/dashboard` already authenticated.
+- [x] A duplicate email shows the message on the email field and creates nothing.
+- [x] Mismatched passwords show the error on the confirm field.
+- [x] Errors do not clear the name and email the user already typed.
+- [x] The submit button disables while the request is in flight.
 
 ## Out of scope
 

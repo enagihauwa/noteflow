@@ -33,11 +33,11 @@ inputs.
 
 ## Acceptance criteria
 
-- [ ] Every action validates before touching the database.
-- [ ] Errors appear beside the field that caused them.
-- [ ] Input survives a failed submission.
-- [ ] Whitespace-only values are rejected as empty.
-- [ ] Client and server rules come from the same schema.
+- [x] Every action validates before touching the database.
+- [x] Errors appear beside the field that caused them.
+- [x] Input survives a failed submission.
+- [x] Whitespace-only values are rejected as empty.
+- [x] Client and server rules come from the same schema.
 
 ## Out of scope
 

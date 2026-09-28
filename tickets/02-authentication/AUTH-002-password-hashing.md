@@ -36,10 +36,10 @@ you the boundary is wrong.
 
 ## Acceptance criteria
 
-- [ ] No row in `User` contains a readable password.
-- [ ] Two accounts with the same password have different hashes (salted).
-- [ ] The password hash never appears in a server response or React prop.
-- [ ] A password below the policy is rejected before it reaches the database.
+- [x] No row in `User` contains a readable password.
+- [x] Two accounts with the same password have different hashes (salted).
+- [x] The password hash never appears in a server response or React prop.
+- [x] A password below the policy is rejected before it reaches the database.
 
 ## Out of scope
 

@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import "@/lib/env"; // fails loudly at boot if a required variable is missing
 
 // A single client instance survives hot reloads in development.
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };

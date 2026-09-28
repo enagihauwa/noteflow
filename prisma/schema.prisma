@@ -5,8 +5,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Pooled connection for the runtime; the direct string is used by Prisma for
+  // migrations and transactions on providers that split the two (e.g. Neon).
+  directUrl = env("DIRECT_URL")
 }
 
 model User {

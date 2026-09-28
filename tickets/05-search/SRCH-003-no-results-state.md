@@ -31,10 +31,10 @@ with forty notes reads like data loss.
 
 ## Acceptance criteria
 
-- [ ] A missed search shows "No notes found."
-- [ ] An account with no notes shows the first-note invitation instead.
-- [ ] The search field keeps the query after a miss.
-- [ ] The echoed query cannot inject markup.
+- [x] A missed search shows "No notes found."
+- [x] An account with no notes shows the first-note invitation instead.
+- [x] The search field keeps the query after a miss.
+- [x] The echoed query cannot inject markup.
 
 ## Out of scope
 

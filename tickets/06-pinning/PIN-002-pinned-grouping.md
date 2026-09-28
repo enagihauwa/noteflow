@@ -31,10 +31,10 @@ signal, the grouping heading carries the same information for anyone who cannot 
 
 ## Acceptance criteria
 
-- [ ] Pinned notes appear above the rest under a clear heading.
-- [ ] Pinned status is conveyed by more than colour.
-- [ ] Headings disappear when the split is meaningless.
-- [ ] Grouping still applies within search results.
+- [x] Pinned notes appear above the rest under a clear heading.
+- [x] Pinned status is conveyed by more than colour.
+- [x] Headings disappear when the split is meaningless.
+- [x] Grouping still applies within search results.
 
 ## Out of scope
 

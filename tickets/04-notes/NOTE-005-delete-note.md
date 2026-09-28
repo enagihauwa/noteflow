@@ -32,11 +32,11 @@ what it does.
 
 ## Acceptance criteria
 
-- [ ] Deleting requires two deliberate actions.
-- [ ] Cancelling leaves the note untouched.
-- [ ] After deletion the user lands on the dashboard and the note is gone.
-- [ ] Deleting the last note shows the empty state.
-- [ ] The flow is completable with the keyboard alone.
+- [x] Deleting requires two deliberate actions.
+- [x] Cancelling leaves the note untouched.
+- [x] After deletion the user lands on the dashboard and the note is gone.
+- [x] Deleting the last note shows the empty state.
+- [x] The flow is completable with the keyboard alone.
 
 ## Out of scope
 

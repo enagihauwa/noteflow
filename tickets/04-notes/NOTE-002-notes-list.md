@@ -32,11 +32,11 @@ updated, which matches the composite index from DB-002.
 
 ## Acceptance criteria
 
-- [ ] Only the signed-in user's notes appear.
-- [ ] Pinned notes sort above the rest; ties break by most recently updated.
-- [ ] The preview truncates cleanly and never breaks the card layout.
-- [ ] Clicking anywhere on a card opens that note.
-- [ ] The dashboard renders without a client-side data fetch.
+- [x] Only the signed-in user's notes appear.
+- [x] Pinned notes sort above the rest; ties break by most recently updated.
+- [x] The preview truncates cleanly and never breaks the card layout.
+- [x] Clicking anywhere on a card opens that note.
+- [x] The dashboard renders without a client-side data fetch.
 
 ## Out of scope
 

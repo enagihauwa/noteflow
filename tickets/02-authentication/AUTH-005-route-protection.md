@@ -34,11 +34,11 @@ alone, and never add a private page outside the `(dashboard)` group.
 
 ## Acceptance criteria
 
-- [ ] Every private URL redirects to `/login` when signed out.
-- [ ] After logging in, the user lands on the page they originally asked for.
-- [ ] A signed-in user visiting `/login` is sent to `/dashboard`.
-- [ ] A Server Action invoked without a session fails instead of running.
-- [ ] Deleting the session cookie mid-session locks the user out on next navigation.
+- [x] Every private URL redirects to `/login` when signed out.
+- [x] After logging in, the user lands on the page they originally asked for.
+- [x] A signed-in user visiting `/login` is sent to `/dashboard`.
+- [x] A Server Action invoked without a session fails instead of running.
+- [x] Deleting the session cookie mid-session locks the user out on next navigation.
 
 ## Out of scope
 

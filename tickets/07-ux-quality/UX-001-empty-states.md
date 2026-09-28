@@ -30,10 +30,10 @@ should say what to do next and offer the button to do it, in the interface's voi
 
 ## Acceptance criteria
 
-- [ ] A new account sees the empty state, not a blank page.
-- [ ] Deleting the last note returns to it.
-- [ ] The action in it leads to the create form.
-- [ ] It never appears at the same time as a note card.
+- [x] A new account sees the empty state, not a blank page.
+- [x] Deleting the last note returns to it.
+- [x] The action in it leads to the create form.
+- [x] It never appears at the same time as a note card.
 
 ## Out of scope
 

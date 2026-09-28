@@ -35,10 +35,10 @@ something they were shown.
 
 ## Acceptance criteria
 
-- [ ] Opening another user's note id shows the not-found screen.
-- [ ] A nonexistent id shows the identical screen.
-- [ ] The dashboard never lists a note the signed-in user does not own.
-- [ ] No foreign note data appears anywhere in the response payload.
+- [x] Opening another user's note id shows the not-found screen.
+- [x] A nonexistent id shows the identical screen.
+- [x] The dashboard never lists a note the signed-in user does not own.
+- [x] No foreign note data appears anywhere in the response payload.
 
 ## Out of scope
 

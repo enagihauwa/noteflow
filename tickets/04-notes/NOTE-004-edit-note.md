@@ -33,11 +33,11 @@ list, which is intended: recently touched notes are the ones you want next.
 
 ## Acceptance criteria
 
-- [ ] The form opens prefilled with the current values.
-- [ ] Saving updates the note and returns to the note page.
-- [ ] `updatedAt` changes and the dashboard order reflects it.
-- [ ] Validation matches the create form exactly.
-- [ ] Editing another user's note id is refused (AUTHZ-003).
+- [x] The form opens prefilled with the current values.
+- [x] Saving updates the note and returns to the note page.
+- [x] `updatedAt` changes and the dashboard order reflects it.
+- [x] Validation matches the create form exactly.
+- [x] Editing another user's note id is refused (AUTHZ-003).
 
 ## Out of scope
 

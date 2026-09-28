@@ -6,6 +6,29 @@ Next.js (App Router) · React · TypeScript · Tailwind CSS · Auth.js · Prisma
 
 ## Getting started
 
+### 1. Start a database
+
+The app needs a PostgreSQL database called `noteflow` reachable at the
+`DATABASE_URL` in `.env` (`postgresql://postgres:postgres@localhost:5432/noteflow`).
+
+Docker:
+
+```bash
+docker run --name noteflow-db -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:16
+```
+
+Or use a local/installed PostgreSQL (the default on this machine) and create the
+database:
+
+```bash
+psql -h localhost -U postgres -c "CREATE DATABASE noteflow;"
+```
+
+A hosted option (Neon, Supabase, Railway) works too — just point `DATABASE_URL`
+at it and keep the value in `.env`.
+
+### 2. Install, configure and run
+
 ```bash
 npm install
 cp .env.example .env        # fill DATABASE_URL and AUTH_SECRET
@@ -16,6 +39,50 @@ npm run dev
 ```
 
 Demo account after seeding: `demo@noteflow.app` / `Password123!`
+
+## Deploying to production — DEP-001
+
+1. Create a hosted PostgreSQL database (Neon, Supabase or Railway) in the region
+   closest to your users. Copy the **pooled** connection string for `DATABASE_URL`
+   and, if the provider offers one, the **direct** string for `DIRECT_URL`.
+2. Generate a fresh secret for production — never reuse the development one:
+
+   ```bash
+   npx auth secret
+   ```
+
+3. In the Vercel project's production environment set:
+   `DATABASE_URL` (pooled), `DIRECT_URL` (direct), `AUTH_SECRET` (the fresh
+   secret), `AUTH_URL` (the public production URL). Do not commit any of them.
+
+4. Apply the schema to production — always `migrate deploy`, never `migrate dev`:
+
+   ```bash
+   DIRECT_URL="$PROD_DIRECT_URL" npx prisma migrate deploy
+   ```
+
+5. Confirm both tables exist and that `User.email` has a unique index:
+
+   ```sql
+   SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
+   SELECT conname FROM pg_constraint WHERE conname = 'User_email_key';
+   ```
+
+## Deploying to Vercel — DEP-002
+
+Import this repository into Vercel with the GitHub integration and select the
+production branch (`main`). The `build` script in `package.json` already runs
+`prisma generate && next build`, so no custom build command is needed.
+
+- Set the DEP-001 environment variables for **Production** and **Preview**:
+  `DATABASE_URL` (pooled), `DIRECT_URL`, `AUTH_SECRET` (fresh per environment),
+  `AUTH_URL`.
+- For Production, `AUTH_URL` is the live URL (e.g. `https://noteflow.app`). For
+  Preview, set it to the per-preview URL Vercel generates.
+- Push to the production branch and read the build log for warnings, not just the
+  success line. Open a pull request to confirm preview deployments build with
+  their own environment.
+- Verify the live URL serves the landing page over HTTPS before calling it done.
 
 ## How the code is laid out
 
@@ -40,6 +107,11 @@ The real checks are server-side: every page and action calls `requireUser()`, an
 query in `lib/notes.ts` is scoped by `userId`. Writes use `updateMany` / `deleteMany`
 filtered on `{ id, userId }`, so a note id belonging to someone else matches zero rows.
 Reads on another user's note return the 404 screen, so ids cannot be probed.
+
+Sessions use the JWT strategy, so logging out only clears the cookie; the token
+itself stays valid until it expires (`maxAge` is a week, not a month, partly for
+this reason). Moving to database-backed sessions later would make logout genuinely
+revoking.
 
 ## Working the tickets
 

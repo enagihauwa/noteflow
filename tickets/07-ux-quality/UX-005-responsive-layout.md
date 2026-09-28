@@ -32,11 +32,11 @@ characters everywhere.
 
 ## Acceptance criteria
 
-- [ ] No horizontal scrolling at 360px on any screen.
-- [ ] The notes grid reflows from one to two columns.
-- [ ] Forms are comfortable to fill on a phone.
-- [ ] Tap targets meet 44px.
-- [ ] Long titles and URLs wrap without breaking layout.
+- [x] No horizontal scrolling at 360px on any screen.
+- [x] The notes grid reflows from one to two columns.
+- [x] Forms are comfortable to fill on a phone.
+- [x] Tap targets meet 44px.
+- [x] Long titles and URLs wrap without breaking layout.
 
 ## Out of scope
 

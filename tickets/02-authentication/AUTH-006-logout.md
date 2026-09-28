@@ -31,10 +31,10 @@ later would make logout genuinely revoking.
 
 ## Acceptance criteria
 
-- [ ] Logout redirects to `/login`.
-- [ ] The session cookie is gone afterwards.
-- [ ] Back-navigation after logout does not show note content.
-- [ ] Logout is a POST, not a link.
+- [x] Logout redirects to `/login`.
+- [x] The session cookie is gone afterwards.
+- [x] Back-navigation after logout does not show note content.
+- [x] Logout is a POST, not a link.
 
 ## Out of scope
 

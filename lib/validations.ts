@@ -36,3 +36,21 @@ export const searchSchema = z.object({
 export type SignUpInput = z.infer<typeof signUpSchema>;
 export type SignInInput = z.infer<typeof signInSchema>;
 export type NoteInput = z.infer<typeof noteSchema>;
+
+// Let the form markup mirror the schema instead of restating it — the schema is
+// the single source of truth for both client attributes and server checks.
+export function textFieldProps(
+  schema: z.ZodTypeAny,
+  name: string,
+): { required: boolean; minLength?: number; maxLength?: number } {
+  const object =
+    schema instanceof z.ZodEffects
+      ? (schema.innerType() as z.ZodObject<z.ZodRawShape>)
+      : (schema as z.ZodObject<z.ZodRawShape>);
+  const field = object.shape[name] as z.ZodString | undefined;
+  return {
+    required: !(field?.isOptional() ?? false),
+    minLength: field?.minLength ?? undefined,
+    maxLength: field?.maxLength ?? undefined,
+  };
+}

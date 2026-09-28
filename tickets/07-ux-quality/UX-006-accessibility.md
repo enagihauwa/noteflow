@@ -32,11 +32,11 @@ verifies the whole and fixes what slipped.
 
 ## Acceptance criteria
 
-- [ ] Every flow in §23 is completable with the keyboard alone.
-- [ ] Focus is always visible and never trapped.
-- [ ] Text contrast meets WCAG AA.
-- [ ] Errors and state changes are announced.
-- [ ] The automated audit reports no critical issues.
+- [x] Every flow in §23 is completable with the keyboard alone.
+- [x] Focus is always visible and never trapped.
+- [x] Text contrast meets WCAG AA.
+- [x] Errors and state changes are announced.
+- [x] The automated audit reports no critical issues.
 
 ## Out of scope
 
