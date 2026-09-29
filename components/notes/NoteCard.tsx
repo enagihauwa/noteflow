@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Note } from "@prisma/client";
+import type { Note } from "@/lib/types";
 import { PinToggle } from "@/components/notes/PinToggle";
 
 // NOTE-002 + PIN-001 — the card navigates to the note, with a pin toggle that

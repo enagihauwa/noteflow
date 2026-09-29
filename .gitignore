@@ -7,6 +7,7 @@ build
 .env*.local
 .DS_Store
 *.pem
+*firebase-adminsdk*.json
 npm-debug.log*
 yarn-error.log*
 .vercel

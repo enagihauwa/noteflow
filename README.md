@@ -2,87 +2,65 @@
 
 A private note-taking app: capture it, find it, manage it.
 
-Next.js (App Router) · React · TypeScript · Tailwind CSS · Auth.js · Prisma · PostgreSQL
+Next.js (App Router) · React · TypeScript · Tailwind CSS · Firebase Auth · Firestore
 
 ## Getting started
 
-### 1. Start a database
+### 1. Create the Firebase project
 
-The app needs a PostgreSQL database called `noteflow` reachable at the
-`DATABASE_URL` in `.env` (`postgresql://postgres:postgres@localhost:5432/noteflow`).
-
-Docker:
-
-```bash
-docker run --name noteflow-db -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:16
-```
-
-Or use a local/installed PostgreSQL (the default on this machine) and create the
-database:
-
-```bash
-psql -h localhost -U postgres -c "CREATE DATABASE noteflow;"
-```
-
-A hosted option (Neon, Supabase, Railway) works too — just point `DATABASE_URL`
-at it and keep the value in `.env`.
+1. [console.firebase.google.com](https://console.firebase.google.com) → create a
+   project (e.g. "noteflow").
+2. **Build → Authentication → Get started → Sign-in method** → enable
+   "Email/Password".
+3. **Project settings → Your apps → Add web app** → copy the `apiKey`.
+4. **Project settings → Service accounts → Generate new private key** → download
+   the JSON.
+5. **Firestore Database → Create database** → production mode → a region close to
+   you. Publish `firebase/firestore.rules` (denies all direct client access; the
+   app writes through the Admin SDK).
 
 ### 2. Install, configure and run
 
 ```bash
 npm install
-cp .env.example .env        # fill DATABASE_URL and AUTH_SECRET
-npx auth secret             # writes AUTH_SECRET
-npm run db:migrate          # creates the User and Note tables
-npm run db:seed             # optional demo account
+cp .env.example .env     # fill the FIREBASE_* vars (see above / .env.example)
 npm run dev
+```
+
+Optional demo account (2 notes):
+
+```bash
+npm run seed
 ```
 
 Demo account after seeding: `demo@noteflow.app` / `Password123!`
 
-## Deploying to production — DEP-001
+## How sessions work
 
-1. Create a hosted PostgreSQL database (Neon, Supabase or Railway) in the region
-   closest to your users. Copy the **pooled** connection string for `DATABASE_URL`
-   and, if the provider offers one, the **direct** string for `DIRECT_URL`.
-2. Generate a fresh secret for production — never reuse the development one:
+Sign-in uses the Firebase Identity Toolkit REST endpoint on the server; the
+returned ID token is exchanged for a **Firebase session cookie**
+(`__session`, httpOnly, Secure in production, 14-day max) via
+`admin.auth().createSessionCookie`. Every protected page and server action calls
+`requireUser()` which verifies that cookie. Signing out just clears the cookie —
+the underlying user record stays valid until the cookie expires.
 
-   ```bash
-   npx auth secret
-   ```
+## Deploying to production
 
-3. In the Vercel project's production environment set:
-   `DATABASE_URL` (pooled), `DIRECT_URL` (direct), `AUTH_SECRET` (the fresh
-   secret), `AUTH_URL` (the public production URL). Do not commit any of them.
+Firebase is the production backend, so there is **no separate database to
+provision** — the Firestore database and Authentication provider you created for
+development are the production ones.
 
-4. Apply the schema to production — always `migrate deploy`, never `migrate dev`:
-
-   ```bash
-   DIRECT_URL="$PROD_DIRECT_URL" npx prisma migrate deploy
-   ```
-
-5. Confirm both tables exist and that `User.email` has a unique index:
-
-   ```sql
-   SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
-   SELECT conname FROM pg_constraint WHERE conname = 'User_email_key';
-   ```
-
-## Deploying to Vercel — DEP-002
-
-Import this repository into Vercel with the GitHub integration and select the
-production branch (`main`). The `build` script in `package.json` already runs
-`prisma generate && next build`, so no custom build command is needed.
-
-- Set the DEP-001 environment variables for **Production** and **Preview**:
-  `DATABASE_URL` (pooled), `DIRECT_URL`, `AUTH_SECRET` (fresh per environment),
-  `AUTH_URL`.
-- For Production, `AUTH_URL` is the live URL (e.g. `https://noteflow.app`). For
-  Preview, set it to the per-preview URL Vercel generates.
-- Push to the production branch and read the build log for warnings, not just the
-  success line. Open a pull request to confirm preview deployments build with
-  their own environment.
-- Verify the live URL serves the landing page over HTTPS before calling it done.
+1. Set these environment variables in the Vercel project for **Production** and
+   **Preview** (paste `FIREBASE_PRIVATE_KEY` with literal `\n`, not real
+   newlines):
+   `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`,
+   `FIREBASE_API_KEY`.
+2. Apply the Firestore rules from `firebase/firestore.rules` to the production
+   project.
+3. Push to the production branch; `npm run build` is the build command and runs
+   `next build`. Read the build log for warnings, not just the success line.
+4. Open a pull request to confirm preview deployments build with their own
+   environment, then verify the live URL serves the landing page over HTTPS.
 
 ## How the code is laid out
 
@@ -90,28 +68,25 @@ production branch (`main`). The `build` script in `package.json` already runs
 |---|---|
 | `app/(auth)` | Login and sign-up pages (public) |
 | `app/(dashboard)` | Every authenticated screen; the layout calls `requireUser()` |
-| `app/api/auth/[...nextauth]` | Auth.js route handlers |
 | `components/` | Presentational and form components |
-| `lib/auth.ts` | Auth.js configuration (credentials provider) |
-| `lib/session.ts` | `requireUser()` — the one place a page asks "who is this?" |
+| `lib/firebase.ts` | Admin SDK init, REST sign-in, session-cookie helpers |
+| `lib/session.ts` | `requireUser()` / `getSession()` — the one place a page asks "who is this?" |
 | `lib/notes.ts` | Data access. Every function takes `userId` first |
 | `lib/actions/` | Server Actions called by forms |
 | `lib/validations.ts` | Zod schemas shared by client and server |
-| `prisma/schema.prisma` | Database schema |
+| `scripts/seed.ts` | Seeds the demo user and notes into Firestore |
+| `firebase/firestore.rules` | Firestore security rules (deny direct client access) |
 | `tickets/` | The build plan, split into epics and tickets |
 
 ## Security model in one paragraph
 
 Middleware redirects visitors without a session cookie, but it is only a convenience.
 The real checks are server-side: every page and action calls `requireUser()`, and every
-query in `lib/notes.ts` is scoped by `userId`. Writes use `updateMany` / `deleteMany`
-filtered on `{ id, userId }`, so a note id belonging to someone else matches zero rows.
-Reads on another user's note return the 404 screen, so ids cannot be probed.
-
-Sessions use the JWT strategy, so logging out only clears the cookie; the token
-itself stays valid until it expires (`maxAge` is a week, not a month, partly for
-this reason). Moving to database-backed sessions later would make logout genuinely
-revoking.
+query in `lib/notes.ts` is scoped by `userId`. Writes read the target document first and
+throw `NotAuthorizedError` when the owner id differs, so a note id belonging to someone
+else never changes. Reads on another user's note return the 404 screen, so ids cannot be
+probed. Firestore rules deny all direct client access, so the only write path is the
+Admin SDK behind the ownership checks.
 
 ## Working the tickets
 

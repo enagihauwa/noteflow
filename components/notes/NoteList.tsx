@@ -1,4 +1,4 @@
-import type { Note } from "@prisma/client";
+import type { Note } from "@/lib/types";
 import { NoteCard } from "@/components/notes/NoteCard";
 
 export function NoteList({

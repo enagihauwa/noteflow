@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/session";
 
 // Landing page — see tickets/07-ux-quality/UX-007-landing-page.md
 export default async function LandingPage() {
-  const session = await auth();
-  if (session?.user) redirect("/dashboard");
+  const session = await getSession();
+  if (session) redirect("/dashboard");
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center px-6 py-16">

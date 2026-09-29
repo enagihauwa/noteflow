@@ -1,14 +1,52 @@
 "use server";
 
-import { AuthError } from "next-auth";
-import { Prisma } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
-import { signIn, signOut } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import {
+  adminAuth,
+  adminDb,
+  AuthenticationError,
+  createSessionCookie,
+  serverTimestamp,
+  signInWithPassword,
+  SESSION_COOKIE_NAME,
+  SESSION_MAX_AGE_MS,
+} from "@/lib/firebase";
+import { env } from "@/lib/env";
 import { requireUser } from "@/lib/session";
 import { signUpSchema, signInSchema } from "@/lib/validations";
 import { type ActionState, DUPLICATE_EMAIL, INVALID_CREDENTIALS } from "@/lib/errors";
-import { isNextRedirect, serverLogError } from "@/lib/log";
+import { serverLogError } from "@/lib/log";
+
+const INVALID_CREDENTIAL_CODES = new Set([
+  "EMAIL_NOT_FOUND",
+  "USER_NOT_FOUND",
+  "INVALID_PASSWORD",
+  "INVALID_LOGIN_CREDENTIALS",
+  "USER_DISABLED",
+]);
+
+function isInvalidCredentialsCode(code: string) {
+  return INVALID_CREDENTIAL_CODES.has(code);
+}
+
+function isDuplicateEmail(error: unknown) {
+  return (error as { code?: string }).code === "auth/email-already-in-use";
+}
+
+// Signs the user in and mints the Firebase session cookie for this response.
+async function setSessionCookie(email: string, password: string) {
+  const idToken = await signInWithPassword(email, password, env.FIREBASE_API_KEY);
+  const sessionCookie = await createSessionCookie(idToken);
+  const store = await cookies();
+  store.set(SESSION_COOKIE_NAME, sessionCookie, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: SESSION_MAX_AGE_MS / 1000,
+  });
+}
 
 export async function registerAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const parsed = signUpSchema.safeParse(Object.fromEntries(formData));
@@ -18,28 +56,38 @@ export async function registerAction(_prev: ActionState, formData: FormData): Pr
 
   const { name, email, password } = parsed.data;
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return { ok: false, fieldErrors: { email: [DUPLICATE_EMAIL] } };
-  }
-
-  const hashed = await bcrypt.hash(password, 12);
-
+  let uid: string;
   try {
-    await prisma.user.create({ data: { name, email, password: hashed } });
+    const record = await adminAuth.createUser({ email, password, displayName: name });
+    uid = record.uid;
   } catch (error) {
-    // P2002 fires when two requests register the same email at once; treat it
-    // like the pre-check so the user sees the same friendly message.
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+    if (isDuplicateEmail(error)) {
       return { ok: false, fieldErrors: { email: [DUPLICATE_EMAIL] } };
     }
     serverLogError("auth.register", error);
     throw error;
   }
 
-  // signIn throws a redirect on success, so it stays outside the try/catch above.
-  await signIn("credentials", { email, password, redirectTo: "/dashboard" });
-  return { ok: true };
+  try {
+    await adminDb.collection("users").doc(uid).set({
+      name,
+      email,
+      createdAt: serverTimestamp(),
+    });
+  } catch (error) {
+    serverLogError("auth.register.users", error);
+    throw error;
+  }
+
+  try {
+    await setSessionCookie(email, password);
+  } catch (error) {
+    serverLogError("auth.register.session", error);
+    throw error;
+  }
+
+  redirect("/dashboard");
+  return { ok: true }; // unreachable — redirect() throws
 }
 
 // The middleware writes the originally-requested path into ?from. Only accept
@@ -59,19 +107,21 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
   }
 
   try {
-    await signIn("credentials", { ...parsed.data, redirectTo: safeRedirectTo(formData.get("from")) });
-    return { ok: true };
+    await setSessionCookie(parsed.data.email, parsed.data.password);
   } catch (error) {
-    if (error instanceof AuthError) {
+    if (error instanceof AuthenticationError && isInvalidCredentialsCode(error.code)) {
       return { ok: false, message: INVALID_CREDENTIALS };
     }
-    if (isNextRedirect(error)) throw error; // the success path control flow
     serverLogError("auth.login", error);
     throw error; // unknown failures bubble up to the boundary
   }
+
+  redirect(safeRedirectTo(formData.get("from")));
 }
 
 export async function logoutAction() {
   await requireUser();
-  await signOut({ redirectTo: "/login" });
+  const store = await cookies();
+  store.delete(SESSION_COOKIE_NAME);
+  redirect("/login");
 }

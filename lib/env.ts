@@ -1,9 +1,14 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is missing — set it in .env (see .env.example)."),
-  AUTH_SECRET: z.string().min(1, "AUTH_SECRET is missing — generate one with `npx auth secret`."),
-  AUTH_URL: z.string().min(1, "AUTH_URL is missing — set the public base URL of the app."),
+  FIREBASE_PROJECT_ID: z.string().min(1, "FIREBASE_PROJECT_ID is missing — set it in .env (see .env.example)."),
+  FIREBASE_CLIENT_EMAIL: z
+    .string()
+    .min(1, "FIREBASE_CLIENT_EMAIL is missing — set it from the Firebase service account JSON."),
+  FIREBASE_PRIVATE_KEY: z
+    .string()
+    .min(1, "FIREBASE_PRIVATE_KEY is missing — set it from the Firebase service account JSON (\\n stays literal)."),
+  FIREBASE_API_KEY: z.string().min(1, "FIREBASE_API_KEY is missing — set it from the Firebase web app config."),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 });
 
