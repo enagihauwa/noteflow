@@ -1,0 +1,6 @@
+{
+  "watch": ["server.js", "next.config.ts"],
+  "ext": "js,ts,mjs,cjs",
+  "ignore": [".next", "node_modules", ".git"],
+  "exec": "node server.js"
+}
