@@ -55,7 +55,7 @@ export default async function DashboardPage({
         <div className="mt-8 space-y-10">
           {pinned.length > 0 && <NoteList heading="Pinned" notes={pinned} query={query} />}
           {rest.length > 0 && (
-            <NoteList heading={pinned.length > 0 ? "Everything else" : undefined} notes={rest} query={query} />
+            <NoteList heading={pinned.length > 0 ? "Notes" : undefined} notes={rest} query={query} />
           )}
         </div>
       )}

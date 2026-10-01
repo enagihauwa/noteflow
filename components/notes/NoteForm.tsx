@@ -45,7 +45,7 @@ export function NoteForm({ mode, noteId, defaultTitle = "", defaultContent = "" 
           {...titleProps}
           aria-invalid={Boolean(state.fieldErrors?.title)}
           aria-describedby={state.fieldErrors?.title ? "note-title-error" : undefined}
-          className="mt-1 w-full min-h-11 rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2"
+          className="mt-1 w-full min-h-11 rounded-md bg-[var(--color-surface)] px-3 py-2 shadow-[0_10px_30px_-12px_rgba(28,32,36,0.18),0_2px_8px_-4px_rgba(28,32,36,0.08)]"
         />
         <FieldError id="note-title-error" messages={state.fieldErrors?.title} />
       </div>
@@ -63,7 +63,7 @@ export function NoteForm({ mode, noteId, defaultTitle = "", defaultContent = "" 
           {...contentProps}
           aria-invalid={Boolean(state.fieldErrors?.content)}
           aria-describedby={state.fieldErrors?.content ? "note-content-error" : undefined}
-          className="mt-1 w-full rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2 leading-relaxed"
+          className="mt-1 w-full rounded-md bg-[var(--color-surface)] px-3 py-2 leading-relaxed shadow-[0_10px_30px_-12px_rgba(28,32,36,0.18),0_2px_8px_-4px_rgba(28,32,36,0.08)]"
         />
         <FieldError id="note-content-error" messages={state.fieldErrors?.content} />
       </div>

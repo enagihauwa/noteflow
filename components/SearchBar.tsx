@@ -37,7 +37,7 @@ export function SearchBar({ defaultValue }: { defaultValue?: string }) {
         value={value}
         placeholder="Search titles and content"
         onChange={(e) => onChange(e.target.value)}
-        className="w-full min-h-11 rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2.5 text-sm"
+        className="w-full min-h-11 rounded-md bg-[var(--color-surface)] px-4 py-2.5 text-sm shadow-[0_10px_30px_-12px_rgba(28,32,36,0.18),0_2px_8px_-4px_rgba(28,32,36,0.08)]"
       />
       {pending && (
         <span
