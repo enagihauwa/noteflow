@@ -22,7 +22,7 @@ export function PinToggle({
       aria-pressed={isPinned}
       disabled={pending}
       onClick={() => startTransition(() => void togglePinAction(noteId))}
-      className={`${className ?? ""} inline-flex min-h-11 items-center justify-center rounded-md border border-[#2563eb] px-2 text-xs text-[#2563eb]`}
+      className={`${className ?? ""} inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--color-cta)] px-2 text-xs text-[var(--color-cta)]`}
     >
       {isPinned ? "Unpin" : "Pin"}
     </button>

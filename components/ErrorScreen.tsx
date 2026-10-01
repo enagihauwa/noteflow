@@ -8,7 +8,7 @@ export function ErrorScreen({ onReset }: { onReset: () => void }) {
       <p className="mt-3 text-[var(--color-muted)]">{ERROR_PAGE_BODY}</p>
       <button
         onClick={onReset}
-        className="mt-6 w-fit rounded-md bg-[#2563eb] px-4 py-2 text-sm text-white transition-colors hover:bg-[#1d4ed8]"
+        className="mt-6 w-fit rounded-md bg-[var(--color-cta)] px-4 py-2 text-sm text-[var(--color-cta-fg)] transition-colors hover:bg-[var(--color-cta-hover)]"
       >
         {RETRY_LABEL}
       </button>

@@ -13,7 +13,7 @@ const BASE_FIELD =
   "mt-1 h-12 w-full rounded-lg border bg-[var(--color-surface)] px-4 text-sm text-[var(--color-ink)] outline-none transition-colors focus-visible:outline-none";
 
 const FIELD_NO_ERROR =
-  "border-[var(--color-line)] hover:border-[#c3cbd6] focus:border-[#93c5fd] focus:ring-2 focus:ring-[#93c5fd]";
+  "border-[var(--color-line)] hover:border-[var(--color-line-strong)] focus:border-[var(--color-cta-ring)] focus:ring-2 focus:ring-[var(--color-cta-ring)]";
 
 const FIELD_ERROR =
   "border-[var(--color-alert)] hover:border-[var(--color-alert)] focus:border-[var(--color-alert)] focus:ring-2 focus:ring-[var(--color-alert)]";
@@ -167,7 +167,7 @@ export function SignUpForm() {
               <li key={requirement.label} className="flex items-center gap-1.5 text-xs">
                 <span
                   aria-hidden="true"
-                  className={met ? "font-medium text-[#2563eb]" : "text-[var(--color-muted)]"}
+                  className={met ? "font-medium text-[var(--color-cta)]" : "text-[var(--color-muted)]"}
                 >
                   {met ? "✓" : "○"}
                 </span>

@@ -8,7 +8,7 @@ import { PinToggle } from "@/components/notes/PinToggle";
 export function NoteCard({ note, query }: { note: Note; query?: string }) {
   const href = query ? `/notes/${note.id}?q=${encodeURIComponent(query)}` : `/notes/${note.id}`;
   return (
-    <div className="relative rounded-lg bg-[var(--color-surface)] p-5 shadow-[0_10px_30px_-12px_rgba(28,32,36,0.18),0_2px_8px_-4px_rgba(28,32,36,0.08)] transition-shadow hover:shadow-[0_14px_38px_-12px_rgba(28,32,36,0.26),0_3px_10px_-4px_rgba(28,32,36,0.12)]">
+    <div className="relative rounded-lg bg-[var(--color-surface)] p-5 shadow-[var(--elev-card)] transition-shadow hover:shadow-[var(--elev-card-hover)]">
       <Link href={href} className="block">
         <h3 className="display flex items-center gap-2 text-lg leading-snug [overflow-wrap:anywhere]">
           {note.isPinned && (

@@ -45,7 +45,7 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
 
       <Link
         href={`/notes/${noteId}/edit`}
-        className="inline-flex min-h-11 items-center rounded-md border border-[#2563eb] px-3 py-1.5"
+        className="inline-flex min-h-11 items-center rounded-md border border-[var(--color-cta)] px-3 py-1.5"
       >
         Edit
       </Link>
@@ -56,7 +56,7 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
             autoFocus
             onClick={() => startTransition(() => void deleteNoteAction(noteId))}
             disabled={pending}
-            className="inline-flex min-h-11 items-center rounded-md bg-[var(--color-alert)] px-3 py-1.5 text-white"
+            className="inline-flex min-h-11 items-center rounded-md bg-[var(--color-alert)] px-3 py-1.5 text-[var(--color-alert-fg)]"
           >
             Delete for good
           </button>
@@ -71,7 +71,7 @@ export function NoteActions({ noteId, isPinned }: { noteId: string; isPinned: bo
         <button
           ref={triggerRef}
           onClick={() => setConfirming(true)}
-          className="inline-flex min-h-11 items-center rounded-md border border-[#2563eb] px-3 py-1.5"
+          className="inline-flex min-h-11 items-center rounded-md border border-[var(--color-cta)] px-3 py-1.5"
         >
           Delete
         </button>

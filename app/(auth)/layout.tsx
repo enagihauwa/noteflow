@@ -8,7 +8,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <BrandMark className="h-6 w-6" />
         NoteFlow
       </Link>
-      <div className="mt-8 w-full rounded-[14px] border border-[var(--color-line)] bg-[var(--color-surface)] p-6 shadow-[0_10px_30px_-12px_rgba(28,32,36,0.18),0_2px_8px_-4px_rgba(28,32,36,0.08)] sm:p-8">
+      <div className="mt-8 w-full rounded-[14px] border border-[var(--color-line)] bg-[var(--color-surface)] p-6 shadow-[var(--elev-card)] sm:p-8">
         {children}
       </div>
     </main>

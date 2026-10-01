@@ -10,7 +10,7 @@ export default async function LandingPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center px-6 py-16">
-      <p className="flex items-center gap-2 text-2xl font-normal text-[#111111] [font-family:var(--font-roboto-serif)]">
+      <p className="flex items-center gap-2 text-2xl font-normal text-[var(--color-ink)] [font-family:var(--font-roboto-serif)]">
         <BrandMark className="h-7 w-7" />NoteFlow
       </p>
       <h1 className="display mt-4 max-w-[16ch] text-4xl leading-tight sm:text-6xl">
@@ -22,13 +22,13 @@ export default async function LandingPage() {
       <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/signup"
-          className="inline-flex min-h-12 items-center rounded-md bg-[#2563eb] px-7 text-lg font-medium text-white transition-colors hover:bg-[#1d4ed8]"
+          className="inline-flex min-h-12 items-center rounded-md bg-[var(--color-cta)] px-7 text-lg font-medium text-[var(--color-cta-fg)] transition-colors hover:bg-[var(--color-cta-hover)]"
         >
           Create an account
         </Link>
         <Link
           href="/login"
-          className="inline-flex min-h-12 items-center rounded-md border border-[#2563eb] px-7 text-lg font-medium text-[#2563eb] transition-colors hover:bg-[#2563eb]/5"
+          className="inline-flex min-h-12 items-center rounded-md border border-[var(--color-cta)] px-7 text-lg font-medium text-[var(--color-cta)] transition-colors hover:bg-[var(--color-cta)]/5"
         >
           Log in
         </Link>

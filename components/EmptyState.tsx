@@ -12,13 +12,13 @@ export function EmptyState({ query }: { query?: string }) {
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm">
           <Link
             href="/dashboard"
-            className="inline-flex min-h-11 max-w-full items-center rounded-md border border-[#2563eb] px-4 font-medium text-[#2563eb]"
+            className="inline-flex min-h-11 max-w-full items-center rounded-md border border-[var(--color-cta)] px-4 font-medium text-[var(--color-cta)]"
           >
             Clear search
           </Link>
           <Link
             href={`/notes/new?title=${encodeURIComponent(query)}`}
-            className="inline-flex min-h-11 max-w-full items-center rounded-md bg-[#2563eb] px-4 font-medium text-white transition-colors hover:bg-[#1d4ed8] [overflow-wrap:anywhere]"
+            className="inline-flex min-h-11 max-w-full items-center rounded-md bg-[var(--color-cta)] px-4 font-medium text-[var(--color-cta-fg)] transition-colors hover:bg-[var(--color-cta-hover)] [overflow-wrap:anywhere]"
           >
             Create a note named “{query}”
           </Link>
@@ -33,7 +33,7 @@ export function EmptyState({ query }: { query?: string }) {
       <p className="mt-2 text-sm text-[var(--color-muted)]">Write the first one now.</p>
       <Link
         href="/notes/new"
-        className="mt-6 inline-flex min-h-11 items-center rounded-md bg-[#2563eb] px-4 text-sm font-medium text-white transition-colors hover:bg-[#1d4ed8]"
+        className="mt-6 inline-flex min-h-11 items-center rounded-md bg-[var(--color-cta)] px-4 text-sm font-medium text-[var(--color-cta-fg)] transition-colors hover:bg-[var(--color-cta-hover)]"
       >
         Create a note
       </Link>

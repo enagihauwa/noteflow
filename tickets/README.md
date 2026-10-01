@@ -75,6 +75,7 @@ tickets/
 | 39 | DEP-003 Production smoke tests | DEP-002 | M |
 | 40 | DEP-004 README and handover docs | DEP-003 | S |
 | 41 | DEP-005 Provision Firebase with the Firebase CLI | DEP-001 | M |
+| 42 | UX-008 Light and dark theme | FND-002, FND-004 | M |
 
 Sizes: S ≈ under half a day, M ≈ half to one day, L ≈ more than a day.
 

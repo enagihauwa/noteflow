@@ -1,24 +1,38 @@
 @import "tailwindcss";
 
 /* NoteFlow design tokens — a quiet paper/ink palette with one moss accent
-   and an amber marker reserved for pinned notes. */
+   and an alert red reserved for pinned notes and destructive actions.
+   This block is the LIGHT scheme; the .dark block at the bottom overrides the
+   same names. Tailwind emits these to :root, so utilities like bg-paper resolve
+   to var(--color-paper) and follow whichever scheme is active. */
 @theme {
   --color-paper: #f5f6f8;
   --color-surface: #ffffff;
   --color-ink: #1c2024;
   --color-muted: #5d6570;
   --color-line: #dfe3e8;
+  --color-line-strong: #c3cbd6;
   --color-moss: #2f6f5e;
   --color-amber: #b3761b;
   --color-alert: #a3312a;
+  --color-alert-fg: #ffffff;
   --color-cta: #2563eb;
+  --color-cta-hover: #1d4ed8;
+  --color-cta-active: #1e40af;
+  --color-cta-fg: #ffffff;
+  --color-cta-ring: #3b82f6;
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 
-html {
+/* Card elevation. Shadows carry the depth the removed container borders used to,
+   so they need a dark value too — a soft ink shadow is invisible on a dark page. */
+:root {
   color-scheme: light;
+
+  --elev-card: 0 10px 30px -12px rgba(28, 32, 36, 0.18), 0 2px 8px -4px rgba(28, 32, 36, 0.08);
+  --elev-card-hover: 0 14px 38px -12px rgba(28, 32, 36, 0.26), 0 3px 10px -4px rgba(28, 32, 36, 0.12);
 }
 
 body {
@@ -48,4 +62,30 @@ body {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Dark scheme. Same token names, so no component needs a dark-specific class.
+   Accents get lighter and the primary button flips to a dark label, because a
+   mid-blue with white text stops clearing contrast once the page is dark. */
+.dark {
+  color-scheme: dark;
+
+  --color-paper: #101316;
+  --color-surface: #191d21;
+  --color-ink: #e7eaee;
+  --color-muted: #98a2ad;
+  --color-line: #2b3238;
+  --color-line-strong: #3a424a;
+  --color-moss: #63b39a;
+  --color-amber: #d9a04a;
+  --color-alert: #e8756b;
+  --color-alert-fg: #1a0b0a;
+  --color-cta: #6b9ff7;
+  --color-cta-hover: #86b1f9;
+  --color-cta-active: #5489ec;
+  --color-cta-fg: #0b0e12;
+  --color-cta-ring: #7aa9f8;
+
+  --elev-card: 0 10px 30px -12px rgba(0, 0, 0, 0.55), 0 2px 8px -4px rgba(0, 0, 0, 0.4);
+  --elev-card-hover: 0 14px 38px -12px rgba(0, 0, 0, 0.65), 0 3px 10px -4px rgba(0, 0, 0, 0.45);
 }

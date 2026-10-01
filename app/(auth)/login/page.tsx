@@ -18,7 +18,7 @@ export default async function LoginPage({
         No account yet?{" "}
         <Link
           href="/signup"
-          className="inline-flex min-h-11 items-center font-medium text-[#2563eb] hover:underline"
+          className="inline-flex min-h-11 items-center font-medium text-[var(--color-cta)] hover:underline"
         >
           Create one
         </Link>

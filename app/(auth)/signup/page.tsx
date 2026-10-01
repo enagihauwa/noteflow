@@ -12,7 +12,7 @@ export default function SignUpPage() {
         Already registered?{" "}
         <Link
           href="/login"
-          className="inline-flex min-h-11 items-center font-semibold text-[#2563eb] hover:underline"
+          className="inline-flex min-h-11 items-center font-semibold text-[var(--color-cta)] hover:underline"
         >
           Log in
         </Link>

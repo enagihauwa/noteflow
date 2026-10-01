@@ -12,6 +12,7 @@ handled, errors that explain themselves, and a layout that survives a phone.
 | UX-005 | Responsive layout | FND-004 |
 | UX-006 | Accessibility pass | UX-005 |
 | UX-007 | Landing page | FND-004 |
+| UX-008 | Light and dark theme | FND-002, FND-004 |
 
 Exit condition: every screen has a defined empty, loading and error state, and the
 app is usable on a 360px phone with a keyboard and a screen reader.

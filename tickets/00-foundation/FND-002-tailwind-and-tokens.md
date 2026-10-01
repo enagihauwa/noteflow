@@ -40,4 +40,5 @@ token, that is a design decision, not a CSS decision.
 
 ## Out of scope
 
-- Dark mode: listed as a Could-Have in §21.
+- Dark mode: shipped later as UX-008. It needed no new tokens on the component
+  side — the palette is a `.dark` block overriding the same names.

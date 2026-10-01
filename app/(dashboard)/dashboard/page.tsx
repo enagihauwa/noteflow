@@ -39,7 +39,7 @@ export default async function DashboardPage({
         </div>
         <Link
           href="/notes/new"
-          className="inline-flex min-h-11 items-center rounded-md bg-[#2563eb] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1d4ed8]"
+          className="inline-flex min-h-11 items-center rounded-md bg-[var(--color-cta)] px-4 py-2 text-sm font-medium text-[var(--color-cta-fg)] transition-colors hover:bg-[var(--color-cta-hover)]"
         >
           New note
         </Link>
