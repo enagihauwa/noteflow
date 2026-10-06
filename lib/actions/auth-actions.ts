@@ -30,8 +30,10 @@ function isInvalidCredentialsCode(code: string) {
   return INVALID_CREDENTIAL_CODES.has(code);
 }
 
+// firebase-admin codes duplicate email as auth/email-already-exists. The
+// client SDK's auth/email-already-in-use does not occur here.
 function isDuplicateEmail(error: unknown) {
-  return (error as { code?: string }).code === "auth/email-already-in-use";
+  return (error as { code?: string }).code === "auth/email-already-exists";
 }
 
 // Signs the user in and mints the Firebase session cookie for this response.
