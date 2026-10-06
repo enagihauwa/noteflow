@@ -20,7 +20,7 @@ there is nothing to price.
 ## Execution steps
 
 1. Build `app/page.tsx` with the product name, the headline and one supporting sentence.
-2. Add the two actions: create an account (primary) and log in (secondary).
+2. Add the primary action: get started, leading to `/signup`. The secondary "log in" link was dropped — with one clear call to action the page reads cleaner, but a returning visitor now has no route to `/login` from here and must enter it directly or go via `/signup`.
 3. Set the document title and description in `app/layout.tsx` for sharing and search.
 4. Redirect visitors who already have a session straight to `/dashboard`.
 5. Keep the page fully static — no client JavaScript needed to render it.
@@ -33,7 +33,7 @@ there is nothing to price.
 ## Acceptance criteria
 
 - [x] The page states what the product does without scrolling.
-- [x] Both actions lead to the right screens.
+- [x] The single action leads to the right screen.
 - [x] A signed-in visitor is redirected to the dashboard.
 - [x] The page renders with no client-side JavaScript.
 

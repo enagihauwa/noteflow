@@ -13,7 +13,7 @@ export default async function LandingPage() {
       <p className="flex items-center gap-2 text-2xl font-normal text-[var(--color-ink)] [font-family:var(--font-roboto-serif)]">
         <BrandMark className="h-7 w-7" />NoteFlow
       </p>
-      <h1 className="display mt-4 max-w-[16ch] text-4xl leading-tight sm:text-6xl">
+      <h1 className="display mt-4 whitespace-nowrap text-center text-[clamp(1.05rem,5.4vw,2.75rem)] leading-tight">
         Capture it. Find it. Manage it.
       </h1>
       <p className="mx-auto mt-6 w-[600px] max-w-full text-center text-lg tracking-tighter text-[var(--color-muted)]">
@@ -24,13 +24,7 @@ export default async function LandingPage() {
           href="/signup"
           className="inline-flex min-h-12 items-center rounded-md bg-[var(--color-cta)] px-7 text-lg font-medium text-[var(--color-cta-fg)] transition-colors hover:bg-[var(--color-cta-hover)]"
         >
-          Create an account
-        </Link>
-        <Link
-          href="/login"
-          className="inline-flex min-h-12 items-center rounded-md border border-[var(--color-cta)] px-7 text-lg font-medium text-[var(--color-cta)] transition-colors hover:bg-[var(--color-cta)]/5"
-        >
-          Log in
+          Get started
         </Link>
       </div>
     </main>
